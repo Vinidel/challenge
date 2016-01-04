@@ -1,7 +1,14 @@
-# Challenge
+# PragmaTeam Challenge
 
 This project constains the solution for the PragmaTeam Restaurant Challenge.
 
+#Instructions
+
+Please start the server with the command line below
+./bin/www
+
+Please for testing use the command line below
+npm test
 
 #Frameworks
 
