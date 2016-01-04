@@ -8,4 +8,4 @@ This project constains the solution for the PragmaTeam Restaurant Challenge
 - Angular
 - NodeJs
 - Express (server)
-- npm (for dependeces)
+- npm (for dependences)
