@@ -4,11 +4,15 @@
   "description": "Challenge from Pragmateam",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.10.4"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "supertest": "^1.1.0"
   }
 }
