@@ -6,4 +6,9 @@ app.get('/', function(request, response){
   response.send('OK');
 });
 
+app.get('/restaurants', function(request, response){
+  var restaurants = ['Feijao', 'Sujinho', 'Barba'];
+  response.json(restaurants);        
+});
+
 module.exports = app;

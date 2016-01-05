@@ -8,12 +8,13 @@ Please start the server with the command line "./bin/www"
 
 Please for testing use the command line "npm test"
 
-#Frameworks
+#Frameworks and tools
 
 - Angular
 - NodeJs
 - Express (server)
 - npm (for dependencies)
+- Middleware static for html,css,etc.
 
 #Tests
 
