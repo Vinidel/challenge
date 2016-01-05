@@ -17,7 +17,7 @@ describe('Request to the root path', function(){
   it('Returns an index file', function(done){
     request(app)
       .get('/')
-      .expect('restaurants/i', done);
+      .expect(/restaurants/i, done);
   });
 
 });
@@ -43,11 +43,5 @@ describe('Listing restaurants', function(){
     request(app)
       .get('/restaurants')
       .expect(JSON.stringify(['Feijao', 'Sujinho', 'Barba']), done);
-  });
-});
-
-describe('', function(){
-  it('', function(done){
-
   });
 });
