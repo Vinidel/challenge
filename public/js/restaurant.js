@@ -48,10 +48,13 @@ function MainCtrl($scope, RestaurantService){
     if($scope.currentUser != null){
       data.lastUser = $scope.currentUser;
       RestaurantService.vote(data).then(
-        function successCallback(result){},
+        function successCallback(result){
+
+            swal(result.data.message , null , "success");
+        },
 
         function errorCallback(result){
-            alert(result.data.error);
+            swal(result.data.error, null, "error");
         });
     }else {
        alert("OOps! Please choose an user!");

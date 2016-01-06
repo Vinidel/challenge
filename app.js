@@ -30,7 +30,7 @@ var checkRules = function(restDb, rest){
 
     if((restDb.lastUser.name === rest.lastUser.name) && (restDate === serverDate)){
       result.boolean = false;
-      result.message = 'User ' +  restDb.lastUser.name + ' already voted on this restaurant today';
+      result.message = 'User ' +  restDb.lastUser.name + ' has already voted on this restaurant today';
     } else {
       result.boolean = true;
     }
@@ -72,6 +72,7 @@ app.put('/restaurants/:id([0-9]+)', bodyParser.json(), function(request, respons
     restaurant.lastTimeVote = restaurants[index].lastTimeVote;
     restaurant.totalVote = restaurants[index].totalVote;
     result                        = restaurant;
+    result.message                = 'You voted on ' + restaurant.name;
     status                        = 200;
   } else {
     status                        = 400;
