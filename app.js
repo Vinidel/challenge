@@ -15,18 +15,13 @@ var checkRules = function(restDb, rest){
     var restDate = null;
     var serverDate = null;
     rest.lastTimeVote = date;
-    console.log('Rest DB');
-    console.log( restDb);
-    console.log('Request');
-    console.log(rest);
-
 
     if(restDb.lastTimeVote === null){
-      result.boolean = true;
-      return result;
+    result.boolean = true;
+    return result;
     }
-     restDate = restDb.lastTimeVote.getDate() + '-' + restDb.lastTimeVote.getMonth();
-     serverDate = date.getDate() + '-' + date.getMonth();
+    restDate = restDb.lastTimeVote.getDate() + '-' + restDb.lastTimeVote.getMonth();
+    serverDate = date.getDate() + '-' + date.getMonth();
 
     if((restDb.lastUser.name === rest.lastUser.name) && (restDate === serverDate)){
       result.boolean = false;

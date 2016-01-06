@@ -49,7 +49,7 @@ function MainCtrl($scope, RestaurantService){
       data.lastUser = $scope.currentUser;
       RestaurantService.vote(data).then(
         function successCallback(result){
-
+            getList();
             swal(result.data.message , null , "success");
         },
 

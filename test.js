@@ -67,6 +67,21 @@ describe('Listing restaurants', function(){
         .send(rest)
         .expect(400, done);
   });
+
+  it('Choose restaurant to go', function(done){
+    var rest = {"id":1,"name":"Feijao","lastTimeVote":null,"lastUser":{"name":"Tony Stark"},"totalVote":0};
+    request(app)
+      .post('/restaurants/' + rest.id + '/go')
+      .send(rest)
+      .expect(200, done);
+  });
+
+  it('Choose restaurant to go in the same week', function(done){
+    request(app)
+      .post('/restaurants/' + rest.id + '/go')
+      .send(rest)
+      .expect(400, done);
+  });
 });
 
 describe('Listing users', function(){
