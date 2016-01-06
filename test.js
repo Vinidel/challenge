@@ -1,7 +1,9 @@
 var request = require('supertest');
 var app = require('./app');
 
-var restaurants = [{name:'Feijao'}, {name:'Sujinho'},{ name: 'Barba'}];
+var restaurants = [{id:1, name:'Feijao', lastTimeVote:null, lastUser: null, totalVote: 0},
+                   {id:2, name:'Sujinho', lastTimeVote:null, lastUser: null, totalVote: 0},
+                   {id:3, name: 'Barba', lastTimeVote:null, lastUser: null, totalVote: 0}];
 var users = [{name:'Tony Stark'}, {name:'Bruce Banner'},{name: 'That guy with wings'}];
 
 describe('Request to the root path', function(){
@@ -46,6 +48,24 @@ describe('Listing restaurants', function(){
     request(app)
       .get('/restaurants')
       .expect(JSON.stringify(restaurants), done);
+  });
+
+  it('Vote in one restaurant - success', function(done){
+    var rest = {"id":1,"name":"Feijao","lastTimeVote":null,"lastUser":{"name":"Tony Stark"},"totalVote":0};
+      request(app)
+        .put('/restaurants/' + rest.id)
+        .send(rest)
+        .expect(200, done);
+
+  });
+
+  it('Vote in the same restaurant - error', function(done){
+    var rest = {"id":1,"name":"Feijao","lastTimeVote":null,"lastUser":{"name":"Tony Stark"},"totalVote":0};
+      request(app)
+        .put('/restaurants/' + rest.id)
+        .send(rest)
+        .send(rest)
+        .expect(400, done);
   });
 });
 
