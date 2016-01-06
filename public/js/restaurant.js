@@ -45,8 +45,12 @@ function MainCtrl($scope, RestaurantService){
   }
 
   function vote(data){
+    if($scope.currentUser != null){
       data.lastUser = $scope.currentUser;
       RestaurantService.vote(data);
+    }else {
+       alert("OOps! Please choose an user!");
+    }
 
   }
 
