@@ -14,6 +14,12 @@ var checkRules = function(restDb, rest){
     var date = new Date();
     var restDate = null;
     var serverDate = null;
+    rest.lastTimeVote = date;
+    console.log('Rest DB');
+    console.log( restDb);
+    console.log('Request');
+    console.log(rest);
+
 
     if(restDb.lastTimeVote === null){
       result.boolean = true;
@@ -21,12 +27,12 @@ var checkRules = function(restDb, rest){
     }
      restDate = restDb.lastTimeVote.getDate() + '-' + restDb.lastTimeVote.getMonth();
      serverDate = date.getDate() + '-' + date.getMonth();
-    if((restDb.lastUser != rest.lastUser) && (restDate != serverDate)){
-      result.boolean = true;
-    } else {
 
+    if((restDb.lastUser.name === rest.lastUser.name) && (restDate === serverDate)){
       result.boolean = false;
       result.message = 'User ' +  restDb.lastUser.name + ' already voted on this restaurant today';
+    } else {
+      result.boolean = true;
     }
     return result;
 };
