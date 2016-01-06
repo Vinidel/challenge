@@ -1,3 +1,19 @@
-<div ng-repeat="rest in restaurants">
-  {{rest}}
+<h1>Users</h1>
+<span ng-repeat="user in users">
+  <button type="button" name="button"  ng-click=chooseUser(user)>{{user.name}}</button>
+</span>
+
+<div >
+  <label ng-show="currentUser"><strong>Current user:</strong></label>
+  <label>{{currentUser.name}}</label>
+
+</div>
+<h1>Restaurants</h1>
+<ul>
+    <li ng-repeat="rest in restaurants">
+        {{rest.name}}  - <button type="button" name="button" ng-click=vote(rest)>+1</button>
+    </li>
+</ul>
+<div >
+
 </div>
