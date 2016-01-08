@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/Vinidel/challenge.png?label=ready&title=Ready)](https://waffle.io/Vinidel/challenge)
 # PragmaTeam Challenge
 
 This project constains the solution for the PragmaTeam Restaurant Challenge.
