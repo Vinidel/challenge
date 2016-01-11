@@ -11,7 +11,7 @@
 <h1>Restaurants ranking</h1>
 <ul>
     <li ng-repeat="rest in restaurants | orderBy:'-totalVote'">
-        {{rest.name}}  - Votes: {{rest.totalVote}} <button type="button" name="button" ng-click=vote(rest)>+1</button>
+        {{rest.name}}  - Votes: {{rest.totalVote}} <button type="button" name="button" ng-click=vote(rest)>+1</button><button type="button" name="button" ng-click=go(rest)>Go there!!</button>
     </li>
 </ul>
 <div >

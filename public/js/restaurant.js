@@ -17,6 +17,7 @@ function MainCtrl($scope, RestaurantService){
   $scope.data                 = {};
   $scope.getList              = getList;
   $scope.getUsers             = getUsers;
+  $scope.go                   = go;
   $scope.chooseUser           = chooseUser;
   $scope.vote                 = vote;
   $scope.activator            = activator;
@@ -44,12 +45,33 @@ function MainCtrl($scope, RestaurantService){
       $scope.currentUser = user;
   }
 
+  function go(data){
+    //TODO Conitnue this function
+    if($scope.currentUser != null){
+      data.user = $scope.currentUser;
+      RestaurantService.go(data).then(
+        function successCallback(result){
+            getUsers();
+            getList();
+            chooseUser(result.data);
+            swal(result.data.message , null , "success");
+        },
+
+        function errorCallback(result){
+            swal(result.data.message, null, "error");
+        });
+    } else {
+      swal("OOps! Please choose an user!", null, 'error');
+    }
+  }
+
   function vote(data){
     if($scope.currentUser != null){
       data.lastUser = $scope.currentUser;
       RestaurantService.vote(data).then(
         function successCallback(result){
             getList();
+            getUsers();
             swal(result.data.message , null , "success");
         },
 
@@ -57,7 +79,7 @@ function MainCtrl($scope, RestaurantService){
             swal(result.data.error, null, "error");
         });
     }else {
-       alert("OOps! Please choose an user!");
+       swal("OOps! Please choose an user!", null, 'error');
     }
 
   }
@@ -79,6 +101,11 @@ function RestaurantService( $http, $resource ) {
     Service.vote = function(data){
       var url = 'http://localhost:3000/restaurants/' + data.id;
       return $http.put(url, data);
+    };
+
+    Service.go = function(data){
+      var url = 'http://localhost:3000/restaurants/' + data.id + '/go';
+      return $http.post(url, data);
     };
 
 
