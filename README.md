@@ -14,7 +14,7 @@ Please for testing use the command line "npm test"
 - NodeJs
 - Express (server)
 - npm (for dependencies)
-- Middleware static for html,css,etc.
+- Middleware static for html,css,etc 
 
 #Tests
 
