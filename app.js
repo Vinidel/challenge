@@ -155,7 +155,6 @@ app.post('/restaurants/:id([0-9]+)/go', bodyParser.json(), function(request, res
   var user = null;
   var restChosen = null;
   var indexUser = null;
-  console.log(user);
 
   for (var i = 0; i < users.length; i++) {
     if(users[i].name == json.user.name){
@@ -166,7 +165,6 @@ app.post('/restaurants/:id([0-9]+)/go', bodyParser.json(), function(request, res
   }
 
   for (var i = 0; i < user.restVisited.length; i++) {
-    console.log(user);
      if (user.restVisited[i].id == json.id){
        restChosen = user.restVisited[i];
        break;
