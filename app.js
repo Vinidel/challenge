@@ -1,32 +1,56 @@
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 app.use(express.static('public'));
 
 var restaurants = [{id:1, name:'Feijao', lastTimeVote:null, lastUser: null, totalVote: 0},
                    {id:2, name:'Sujinho', lastTimeVote:null, lastUser: null, totalVote: 0},
                    {id:3, name: 'Barba', lastTimeVote:null, lastUser: null, totalVote: 0}];
-var users = [{name:'Tony Stark', restVisited: []}, {name:'Bruce Banner', restVisited: []},{name: 'That guy with wings', restVisited: []}];
+var users = [{name:'Tony Stark', restVisited: [], restVoted :[]}, {name:'Bruce Banner', restVisited: [], restVoted: []},{name: 'That guy with wings', restVisited: [], restVoted: []}];
 var chosenOne = null;
 
-var checkRules = function(restDb, rest){
+var isOnList = function(data){
+  var sessionUser  = getSessionUser(data);
+  var result = false;
+  for (var i = 0; i < sessionUser.restVoted.length; i++) {
+    if(sessionUser.restVoted[i].name === data.name ){
+      result = true;
+    }
+  }
+  return result;
+};
+
+
+var checkRules = function (rest){
     var result = {};
     var date = new Date();
     var restDate = null;
     var serverDate = null;
+    var sessionUser = getSessionUser(rest);
+    var restDb = null;
+
+    for (var i = 0; i < restaurants.length; i++) {
+      if(restaurants[i].id === rest.id){
+        restDb = restaurants[i];
+
+        break;
+      }
+    }
+
+    var existsOnList = isOnList(rest);
     rest.lastTimeVote = date;
 
     if(restDb.lastTimeVote === null){
-    result.boolean = true;
-    return result;
+      result.boolean = true;
+      return result;
     }
     restDate = restDb.lastTimeVote.getDate() + '-' + restDb.lastTimeVote.getMonth();
     serverDate = date.getDate() + '-' + date.getMonth();
 
-    if((restDb.lastUser.name === rest.lastUser.name) && (restDate === serverDate)){
+    if( existsOnList && (restDate === serverDate)){
       result.boolean = false;
-      result.message = 'User ' +  restDb.lastUser.name + ' has already voted on this restaurant today';
+      result.message = 'User ' +  sessionUser.name + ' has already voted on this restaurant today';
     } else {
       result.boolean = true;
     }
@@ -34,10 +58,6 @@ var checkRules = function(restDb, rest){
 };
 
 var checkDate = function(co){
-  console.log('Check Date');
-  console.log(new Date());
-  console.log(String(getWeek(co.dateVisited)).substr(-1) + ' ' + String(getWeek(new Date())).substr(-1));
-
 
   if(String(getWeek(co.dateVisited)).substr(-1) == String(getWeek(new Date())).substr(-1)){
       return false;
@@ -61,6 +81,25 @@ var getWeek = function(d) {
     return [d.getFullYear(), weekNo];
 };
 
+var getSessionUser = function(data){
+  var usr = data.lastUser;
+  for (var i = 0; i < users.length; i++) {
+    if(users[i].name == usr.name){
+       return users[i];
+     }
+  }
+};
+
+var getUserIndex = function(data){
+  var usr = data.lastUser;
+  for (var i = 0; i < users.length; i++) {
+    if(users[i].name == usr.name){
+       return i;
+     }
+  }
+};
+
+
 app.get('/', function(request, response){
   response.send(index);
 });
@@ -76,10 +115,13 @@ app.put('/restaurants/:id([0-9]+)', bodyParser.json(), function(request, respons
   var result = null;
   var status = null;
   var index = null;
-
+  var restDb = null;
+  var user = getSessionUser(request.body);
+  var usrIndex = getUserIndex(request.body);
 
   for (var i = 0; i < restaurants.length; i++) {
     if(restaurants[i].id === restaurant.id){
+      restDb = restaurants[i];
       index = i;
     }else{
       status                        = 400;
@@ -87,7 +129,7 @@ app.put('/restaurants/:id([0-9]+)', bodyParser.json(), function(request, respons
     }
   }
 
-  var check = checkRules(restaurants[index], restaurant);
+  var check = checkRules(restaurant);
 
   if(check.boolean){
     restaurants[index].lastTimeVote   = new Date();
@@ -95,6 +137,7 @@ app.put('/restaurants/:id([0-9]+)', bodyParser.json(), function(request, respons
     restaurants[index].totalVote++;
     restaurant.lastTimeVote = restaurants[index].lastTimeVote;
     restaurant.totalVote = restaurants[index].totalVote;
+    users[usrIndex].restVoted.push(restaurant);
     result = restaurant;
     result.message = 'You voted on ' + restaurant.name;
     status  = 200;
