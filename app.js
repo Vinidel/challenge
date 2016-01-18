@@ -57,13 +57,16 @@ var checkRules = function (rest){
     return result;
 };
 
-var checkDate = function(co){
+var checkDate = function(data){
+  var result = true;
+  var dateId = getWeek(new Date());
 
-  if(String(getWeek(co.dateVisited)).substr(-1) == String(getWeek(new Date())).substr(-1)){
-      return false;
-  } else {
-    return true;
+  for (var i = 0; i < data.restVisited.length; i++) {
+    if(data.restVisited[i].dateId === dateId){
+      result = false;
+    }
   }
+  return result;
 };
 
 var getWeek = function(d) {
@@ -78,7 +81,7 @@ var getWeek = function(d) {
     // Calculate full weeks to nearest Thursday
     var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
     // Return array of year and week number
-    return [d.getFullYear(), weekNo];
+    return d.getFullYear() + '' + weekNo;
 };
 
 var getSessionUser = function(data){
@@ -156,6 +159,7 @@ app.post('/restaurants/:id([0-9]+)/go', bodyParser.json(), function(request, res
   var restChosen = null;
   var indexUser = null;
 
+
   for (var i = 0; i < users.length; i++) {
     if(users[i].name == json.user.name){
       user = users[i];
@@ -165,14 +169,17 @@ app.post('/restaurants/:id([0-9]+)/go', bodyParser.json(), function(request, res
   }
 
   for (var i = 0; i < user.restVisited.length; i++) {
+
      if (user.restVisited[i].id == json.id){
        restChosen = user.restVisited[i];
        break;
      }
   }
 
-  if(user.restVisited.length === 0 || restChosen === null || checkDate(restChosen)  ){
-    var newRest = {id: json.id, dateVisited: new Date()};
+
+  if(user.restVisited.length === 0 || restChosen === null || checkDate(user)  ){
+
+    var newRest = {id: json.id, dateVisited: new Date(), dateId: getWeek(new Date())};
     users[indexUser].restVisited.push(newRest);
     status = 200;
     result = users[indexUser];
