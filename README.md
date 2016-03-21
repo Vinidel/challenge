@@ -1,6 +1,6 @@
 [![Stories in Ready](https://badge.waffle.io/Vinidel/challenge.png?label=ready&title=Ready)](https://waffle.io/Vinidel/challenge)
 
-[![Stories in Done](https://badge.waffle.io/Vinidel/challenge.svg?label=ready&title=Done)](http://waffle.io/Vinidel/challenge)
+[![Stories in Done](https://badge.waffle.io/Vinidel/challenge.svg?label=done&title=Done)](http://waffle.io/Vinidel/challenge)
 
 # PragmaTeam Challenge
 
