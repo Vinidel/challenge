@@ -89,22 +89,23 @@ function MainCtrl($scope, RestaurantService){
 function RestaurantService( $http, $resource ) {
 
     var Service = {};
+    var address = 'http://104.131.80.240:3000'
 
     Service.getRestaurants = function(){
-      return $http.get('http://localhost:3000/restaurants');
+      return $http.get(adress + '/restaurants');
     };
 
     Service.getUsers = function(){
-      return $http.get('http://localhost:3000/users');
+      return $http.get(adress + '/users');
     };
 
     Service.vote = function(data){
-      var url = 'http://localhost:3000/restaurants/' + data.id;
+      var url = adress + '/restaurants/' + data.id;
       return $http.put(url, data);
     };
 
     Service.go = function(data){
-      var url = 'http://localhost:3000/restaurants/' + data.id + '/go';
+      var url = adress + '/restaurants/' + data.id + '/go';
       return $http.post(url, data);
     };
 
