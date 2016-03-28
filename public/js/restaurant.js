@@ -92,20 +92,20 @@ function RestaurantService( $http, $resource ) {
     var address = 'http://104.131.80.240:3000'
 
     Service.getRestaurants = function(){
-      return $http.get(adress + '/restaurants');
+      return $http.get(address + '/restaurants');
     };
 
     Service.getUsers = function(){
-      return $http.get(adress + '/users');
+      return $http.get(address + '/users');
     };
 
     Service.vote = function(data){
-      var url = adress + '/restaurants/' + data.id;
+      var url = address + '/restaurants/' + data.id;
       return $http.put(url, data);
     };
 
     Service.go = function(data){
-      var url = adress + '/restaurants/' + data.id + '/go';
+      var url = address + '/restaurants/' + data.id + '/go';
       return $http.post(url, data);
     };
 
