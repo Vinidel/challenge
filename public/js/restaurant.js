@@ -89,7 +89,7 @@ function MainCtrl($scope, RestaurantService){
 function RestaurantService( $http, $resource ) {
 
     var Service = {};
-    var address = 'http://104.131.80.240:3000'
+    var address = 'http://localhost:3000'
 
     Service.getRestaurants = function(){
       return $http.get(address + '/restaurants');
